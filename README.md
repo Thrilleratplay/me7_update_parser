@@ -73,8 +73,9 @@ The result is a file `flashregion_2_intel_me.bin`
    be generated. Between information found on [me.bios.io ME_blob_format (Wayback Machine link)](https://web.archive.org/web/20200225121609/http://me.bios.io/ME_blob_format), [MEAnalyzer](https://github.com/platomav/MEAnalyzer) source code and Igor Skochinsky's presentations ([Rootkit in your laptop - Breakpoint 2012](http://me.bios.io/images/c/ca/Rootkit_in_your_laptop.pdf)
    and [Intel ME Secrets - RECON 2014](https://recon.cx/2014/slides/Recon%202014%20Skochinsky.pdf)) the values of the `me_cleaner.py` output are
    associated with fields.  The values of fields, in combination with the output
-   from the modified me_cleaner functions, are written to a file and verified
-   using the code used by me_cleaner.
+   from the modified me_cleaner functions, are written to a file.  The value at
+   address `0x00039`is set to `0x00`, at which point the file now can pass the
+   verification function that was copied from me_cleaner.
 
 ## Structure of output
 
@@ -200,3 +201,5 @@ The remainder of the file is the cleaned signed and minified `FTPR` partition.
 * `Header flags`: unsure of what the correspond to.
 * `Entry Flags`: correlate to ExclBlockUse, Execute, Write, Read, DirectAccess.
   Not sure if any of these can be changed/disabled.
+* Why does the value at `0x00039` need to be changed to `0x00`?  That has been
+  tested with multiple ME update versions.
